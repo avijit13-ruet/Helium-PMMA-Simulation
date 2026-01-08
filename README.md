@@ -1,3 +1,26 @@
-# Helium-PMMA-Simulation
-He-PMMA simulation
-The non-intrusive measurement of gas phase temperature above a pyrolyzing fuel surface, essential for understanding vertical flame spread (VFS) mechanisms on materials like PMMA, is fundamentally limited by the composition dependency of Laser Rayleigh Scattering Diagnostics (RSD). The strong blowing effect induced by high fuel vapor mass loss dynamically shifts the local gas composition from the ambient (or calibration) state to a high concentration of high-molecular-weight fuel vapor, causing an inherent and time-dependent bias. This research addresses this limitation by developing a one-dimensional, transient, coupled numerical model integrating solid-phase heat conduction with Arrhenius pyrolysis kinetics and gas-phase species transport (Fuel vapor, inert Helium tracer, and Air) using the Method of Lines (MOL). The model was successfully applied to simulate PMMA exposed to external heat fluxes from 10 to 40 kW/m2. A key diagnostic output confirmed the physics: as pyrolysis initiated, the surface Helium mole fraction (XHe) sharply dropped from the initial calibration value of 1.0 to less than 0.05 over a 20-second period, accurately capturing the dominance of fuel vapor blowing. Most significantly, the model quantified the bias by generating the time-dependent effective Rayleigh cross-section (σ_mix) history. This value was found to increase by a factor of up to 3.2 ± 0.1 in the quasi-steady burning regime due to the high cross-section of the PMMA monomer vapor. When this correction factor was applied to simulated raw RSD data, the model demonstrated that the uncorrected measured temperature (T_meas) underestimated the true physical surface temperature (T_s) by as much as 650 K. This work provides a robust, physics-based methodology for calculating the essential dynamic composition correction, thereby enabling the quantitative de-biasing of experimental RSD temperature data for reliable characterization of heat transfer in challenging VFS environments.
+**Coupled Thermo-Kinetic Modeling for LRS Diagnostic Correction in PMMA Pyrolysis**
+This repository contains a specialized 1D transient numerical solver designed to quantify and correct compositional bias in Laser Rayleigh Scattering (LRS) diagnostics. The model specifically addresses the "blowing effect" during the pyrolysis of Poly(methyl methacrylate) (PMMA).
+
+**📌 Project Overview**
+Non-intrusive temperature measurement near pyrolyzing surfaces is often skewed because fuel vapor displaces the calibration gas (e.g., Helium). This displacement changes the effective Rayleigh cross-section ($\sigma_{mix}$), leading to errors as high as 650 K.This tool uses the Method of Lines (MOL) to couple:Solid-Phase: 1D Transient heat conduction with Arrhenius pyrolysis kinetics.Gas-Phase: Species transport (Fuel vapor, Helium tracer, and Air) with convective "blowing" boundaries.Key Capabilities:Bias Quantification: Generates time-dependent $\sigma_{mix}$ history.Parametric Studies: Simulates responses across heat fluxes (10–40 kW/m²) and varying injection velocities ($V_{inj}$).De-biasing: Provides correction factors to recover true thermodynamic temperatures from raw optical data.
+
+🚀 Getting StartedPrerequisites
+MATLAB (R2021a or later recommended).No additional toolboxes are strictly required as the solver utilizes the built-in ode15s for stiff differential equations.InstallationClone the repository:Bashgit clone https://github.com/yourusername/Helium-PMMA-Simulation.git
+
+Open MATLAB and navigate to the project folder.Running the SimulationTo reproduce the results mentioned in the associated research article:Main Simulation: Run Main_Coupled_Simulation.m to see a single case thermal and species evolution.Parametric Study: Run Parametric_Analysis.m to generate comparative plots for varying heat fluxes ($q''_{ext}$) and injection velocities ($V_{inj}$).Surface Temperature Rise: Run Main_Simulation.m for a simplified 1D heat conduction view.
+
+📂 Repository Structure
+Main_Coupled_Simulation.m: The primary driver for the coupled gas-solid model.Coupled_MOL.m: The core derivative function containing the ODE system.Gas_Species_MOL.m: Species transport logic for Helium and MMA vapor.Pyrolysis_MOL.m: Solid-phase energy balance and Arrhenius kinetics.get_initial_X_profile.m: Finite Difference solver to establish steady-state pre-pyrolysis gas profiles.
+
+📊 Results and Validation
+The model captures the "kinetic switch" behavior of PMMA. A key finding included in this code is the sharp drop of Helium mole fraction ($X_{He}$) from 1.0 to $<0.05$ upon pyrolysis onset, proving the dominance of fuel blowing.
+
+📜 LicenseThis project is licensed under the MIT License - see the LICENSE file for details.
+
+✍️ Authors
+1. Avijit Mallik - Lead Researcher - avijitme13@gmail.com
+2. Mohammad Rahat Rahman
+3. Md. Nuruzzaman
+   
+🎓 Citation
+If you use this code in your research, please cite: Mallik, A.; Rahman, M. R. & Nuruzzaman, Md. (2026). Coupled Thermo-Kinetic Modeling for Compositional Bias Correction in Laser Rayleigh Scattering Diagnostics of PMMA Pyrolysis.
